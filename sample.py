@@ -1,38 +1,4 @@
- What is List? How will you reverse a list?
- How will you remove last object from a list?
- Suppose list1 is [2, 33, 222, 14, and 25], what is list1 [-1]?
- Differentiate between append () and extend () methods?
- Write a Python function to get the largest number, smallest num and sum 
-of all from a list.
- How will you compare two lists?
- Write a Python program to count the number of strings where the string 
-length is 2 or more and the first and last character are same from a given 
-list of strings.
- Write a Python program to remove duplicates from a list.
- Write a Python program to check a list is empty or not.
- Write a Python function that takes two lists and returns true if they have 
-at least one common member.
- Write a Python program to generate and print a list of first and last 5 
-elements where the values are square of numbers between 1 and 30.
- Write a Python function that takes a list and returns a new list with unique 
-elements of the first list.
- Write a Python program to convert a list of characters into a string.
- Write a Python program to select an item randomly from a list.
- Write a Python program to find the second smallest number in a list.
- Write a Python program to get unique values from a list
- Write a Python program to check whether a list contains a sub list
- Write a Python program to split a list into different variables.
- What is tuple? Difference between list and tuple.
- Write a Python program to create a tuple with different data types.
- Write a Python program to create a tuple with numbers.
- Write a Python program to convert a tuple to a string.
- Write a Python program to check whether an element exists within a 
-tuple.
- Write a Python program to find the length of a tuple.
- Write a Python program to convert a list to a tuple.
- Write a Python program to reverse a tuple.
- Write a Python program to replace last value of tuples in a list.
- Write a Python program to find the repeated items of a tuple.
+
  Write a Python program to remove an empty tuple(s) from a list of tuples.
  Write a Python program to unzip a list of tuples into individual lists.
  Write a Python program to convert a list of tuples into a dictionary.
@@ -93,5 +59,3 @@ incomplete version of a function?
  Write a Python program to returns sum of all divisors of a number
  Write a Python program to find the maximum and minimum numbers 
 from the specified decimal numbers.
-Module – 4
- What is File function in python? What is keywords to create and write fil

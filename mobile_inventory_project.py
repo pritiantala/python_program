@@ -43,11 +43,11 @@ while status:
         if qtyc<=qty:
             print("PRODUCT IS AVAILABLE")
             specificatonc["qty"]=qtyc
-            for k in mobile_store.keys():
-                for i in cart.keys():
-                    print("COLOUR:"+mobile_store[k]["colour"])
-                    pricec=+int(mobile_store[k]["price"])*+int(cart[i]["qty"])
-                    print("PRICE FOR ONE:"+str(mobile_store[k]["price"]))
+            for product_namec in mobile_store.keys() and cart.keys():
+                #for product_namec in cart.keys():
+                    print("COLOUR:"+mobile_store[product_namec]["colour"])
+                    pricec=+int(mobile_store[product_namec]["price"])*+int(cart[product_namec]["qty"])
+                    print("PRICE FOR ONE:"+str(mobile_store[product_namec]["price"]))
                     print("TOTAL PRICE :",pricec)
                     specificatonc["price"]=pricec
         else:
