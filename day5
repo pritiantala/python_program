@@ -1,4 +1,4 @@
-'''# while loop
+# while loop
 #example 1
 i=1
 while i<=5:
@@ -52,7 +52,7 @@ while trail > 0:
             print("YOU GOT IT!!!")
             trail=0
         trail -= 1    
-'''
+
 #nested for loop
 #example 1
 from doctest import Example
