@@ -30,9 +30,9 @@ def display_score(correct_ans,guess):
     print("RESULTS")
     print("----------------------------")
 
-    print("Answers:",end="")
+    print("Answers:",end=" ")
     for i in question:
-        print(question.get(i),end="")
+        print(question.get(i),end=" ")
     print()
     print("YOUR ANS IS:",end=" ")
     for i in guess:
@@ -46,7 +46,7 @@ def display_score(correct_ans,guess):
 
 #-------------------------------------------
 def play_again():
-    choice=input("Do you want to continue?press 'y' for yes ans 'n' for no")
+    choice=input("Do you want to continue?press 'y' for yes ans 'n' for no: SS")
     if choice=='n' or choice=='no':
         return False
     else:
