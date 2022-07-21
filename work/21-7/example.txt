@@ -1,0 +1,8 @@
+help
+hi
+rgreg
+rg
+rgb_to_hlsg
+REG_DWORD_
+regghnh
+get_handlgfg

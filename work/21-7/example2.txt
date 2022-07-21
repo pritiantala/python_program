@@ -1,0 +1,7 @@
+
+ hello
+ hi
+ this is python file
+ created by me
+ using file write mode
+ my name is priti
