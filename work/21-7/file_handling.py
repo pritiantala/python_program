@@ -6,12 +6,12 @@
 """
 import os
 
-f=open("C:\\Users\\PRITI\\Documents\\GitHub\\python_program\\21-7\\example.txt","r")
+f=open("C:\\Users\\PRITI\\Documents\\GitHub\\python_program\\work\\21-7\\example.txt","r")
 #read file--------------------
 #print(f.read())
 
 #2nd example to read line-----------------------------------
-#f=open(r"C:\Users\PRITI\Documents\GitHub\python_program\21-7\example.txt","r")
+#f=open(r"C:\Users\PRITI\Documents\GitHub\python_program\work\21-7\example.txt","r")
 #print(f.read())
 
 #read first line of file--------------------
