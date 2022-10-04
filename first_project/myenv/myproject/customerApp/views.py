@@ -36,12 +36,19 @@ def my_cart(request):
             all_products=Products.objects.all()
             offers=Offers.objects.all()
             myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+            total_price=0
+
+            for i in myall_product:
+                print("-------->",i.total_price)
+                total_price += int(i.total_price)
+            
             context={
                 'uid':uid,
                 'cid':cid,
                 'all_products':all_products,
                 'offers':offers,
                 'myall_product':myall_product,
+                'total_price':total_price,
             }
             return  render(request,"customerApp/shopping-cart.html ",context)
 
@@ -84,23 +91,129 @@ def delete_product(request,pk):
             return  redirect('my-cart')
 
 def plus_product(request):
-    print("------>inside the python product changes",request.POST['id'])
-    mid= MyCart.objects.get(id=request.POST['id'])
-    print("--->product name:",mid.product_id.product_name)
-    print("--->product qty=",mid.my_qty)
-    product_price=mid.product_id.product_price
-    real_price=product_price.replace(",","")
-    print("----->product price for 1:",mid.product_id.product_price)
-    print("---> real price:",real_price)
+    if "email" in request.session:
+        uid=User.objects.get(email=request.session['email'])
+        if uid.role=="Customer":
+            cid=Customer.objects.get(customer_id=uid) #customer id
+            print("------>inside the python product changes",request.POST['id'])
+            mid= MyCart.objects.get(id=request.POST['id'])
+            print("--->product name:",mid.product_id.product_name)
+            print("--->product qty=",mid.my_qty)
+            product_price=mid.product_id.product_price
+            real_price=product_price.replace(",","")
+            print("----->product price for 1:",mid.product_id.product_price)
+            print("---> real price:",real_price)
 
-    new_qty= int(mid.my_qty) + 1
-    new_price=new_qty * int(real_price)
+            new_qty= int(mid.my_qty) + 1
+            new_price=new_qty * int(real_price)
 
-    mid.my_qty = new_qty
-    mid.total_price = new_price
-    mid.save()
+            mid.my_qty = new_qty
+            mid.total_price = new_price
+            mid.save()
+            myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+            total_price=0
+
+            for i in myall_product:
+                total_price += int(i.total_price)
+            
+            print("------>myall product",myall_product)
+            print("---->total price=",total_price)
+            context={
+                'qty':new_qty,
+                'price':new_price,
+                'total_price':total_price,
+            }
+            return JsonResponse({'context':context})
+
+def minus_product(request):
+    if "email" in request.session:
+        uid=User.objects.get(email=request.session['email'])
+        if uid.role=="Customer":
+            cid=Customer.objects.get(customer_id=uid) #customer id
+            print("------>inside the python product changes",request.POST['id'])
+            mid= MyCart.objects.get(id=request.POST['id'])
+            print("--->product name:",mid.product_id.product_name)
+            print("--->product qty=",mid.my_qty)
+            product_price=mid.product_id.product_price
+            real_price=product_price.replace(",","")
+            print("----->product price for 1:",mid.product_id.product_price)
+            print("---> real price:",real_price)
+
+            if int(mid.my_qty)==1:
+                print("------------qty 1-----------")
+                myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+                total_price=0
+
+                for i in myall_product:
+                    total_price = int(i.total_price)
+                context={
+                    'qty':int(mid.my_qty),
+                    'price':int(mid.total_price),
+                }
+                return JsonResponse({'context':context})
+            else:
+                new_qty= int(mid.my_qty) - 1
+                new_price=new_qty * int(real_price)
+
+                mid.my_qty = new_qty
+                mid.total_price = new_price
+                mid.save()
+                myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+                total_price=0
+
+                for i in myall_product:
+                    total_price += int(i.total_price)
+                print("------>myall product",myall_product)
+                print("---->total price=",total_price)
+                context={
+                    'qty':new_qty,
+                    'price':new_price,
+                    'total_price':total_price,
+                }
+                return JsonResponse({'context':context})
+
+def coupon(request):
+    coupon=request.POST['coupon']
+    total_price=request.POST['total_price']
+    discount =2999
+    net_price= int(total_price)-discount
+    print("--->coupon code:",request.POST['coupon'])
+
     context={
-        'qty':new_qty,
-        'price':new_price,
+        'discount':discount,
+        'net_price':net_price,
+        'total_price':total_price,
     }
     return JsonResponse({'context':context})
+
+def proceed_checkout(request):
+     if "email" in request.session:
+        print("------>proceed to checkout",request.POST['total_price_field'])
+        uid=User.objects.get(email=request.session['email'])
+        if uid.role=="Customer":
+            cid=Customer.objects.get(customer_id=uid)
+            all_products=Products.objects.all()
+            offers=Offers.objects.all()
+            myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+            total_price=0
+
+            for i in myall_product:
+                print("----->product name:",i.product_id.product_name)
+                total_price += int(i.total_price)
+                proceed_checkout_id=ProceedProduct.objects.create(customer_id=i.customer_id,product_id=i.product_id,Shopkeeper_id=i.Shopkeeper_id,my_qty=i.my_qty,total_price=i.total_price,order_net_amount=total_price)
+                
+            context={
+                'uid':uid,
+                'cid':cid,
+                'all_products':all_products,
+                'offers':offers,
+                'myall_product':myall_product,
+                'total_price':total_price,
+            }
+
+            for i in myall_product:
+                myall_product=MyCart.objects.filter(customer_id=cid,status="PENDING")
+                myall_product.delete()
+
+          
+            return  render(request,"customerApp/c_index.html ",context)

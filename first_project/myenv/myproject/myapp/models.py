@@ -1,7 +1,9 @@
 import email
+from email.policy import default
 from itertools import product
 from tkinter import CASCADE
 from turtle import title
+from unittest.util import _MAX_LENGTH
 from venv import create
 from django.db import models
 
@@ -72,3 +74,15 @@ class MyCart(models.Model):
 
     def __str__(self):
         return self.customer_id.firstname+ "-"+ self.product_id.product_name
+
+class ProceedProduct(models.Model):
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    product_id=models.ForeignKey(Products,on_delete=models.CASCADE)
+    Shopkeeper_id=models.ForeignKey(Shopkeeper,on_delete=models.CASCADE)
+    my_qty=models.CharField(max_length=30)
+    total_price=models.CharField(max_length=30)
+    status=models.CharField(max_length=80,default="Order Raise")
+    order_accept_status=models.CharField(max_length=80,default="PENDING")
+    created_at=models.DateTimeField(auto_now_add=True)
+    address=models.TextField(blank=True,null=True)
+    order_net_amount=models.CharField(max_length=30,default="")

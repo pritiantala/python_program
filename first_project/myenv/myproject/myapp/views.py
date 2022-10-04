@@ -211,3 +211,16 @@ def my_products(request):
         }
 
         return render(request,"myapp/my_products.html",context)
+
+def view_customer(request):
+    if "email" in request.session:
+        uid=User.objects.get(email=request.session['email'])
+        sid=Shopkeeper.objects.get(user_id=uid)
+        all_customer=ProceedProduct.objects.filter(Shopkeeper_id=sid)
+        context={
+            'uid':uid,
+            'sid':sid,
+            'all_customer':all_customer,
+        }
+
+        return render(request,"myapp/customer.html",context)

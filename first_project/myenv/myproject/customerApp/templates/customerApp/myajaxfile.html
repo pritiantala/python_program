@@ -3,10 +3,10 @@
 
         console.log("------>button clicked");
         let csr=$("input[name=csrfmiddlewaretoken]").val();
-
         let id=$(this).attr("data-sid");
         console.log("----->id plus value",id);
         var html_qty_id="#myproduct"+id;
+        var html_price_id= "#myproductprice"+id;
         console.log("---->actual id is",html_qty_id);
         mydata={
             id:id,
@@ -23,8 +23,12 @@
                 {
                     console.log("response:",response.context.qty);
                     console.log("response:",response.context.price);
+                    console.log("response:",response.context.total_price);
 
-                    $(html_qty_id).html(response.context.qty)
+                    $(html_qty_id).html(response.context.qty);
+                    $(html_price_id).html("Rs."+response.context.price);
+                    $("#total_price_id").html("Rs. "+response.context.total_price);
+                    $("#total_price_field").val(response.context.total_price);
 
                 }
             }
@@ -34,8 +38,68 @@
     $(".btn-minus").click(function(){
 
         console.log("------>button clicked");
-
+        let csr=$("input[name=csrfmiddlewaretoken]").val();
         let id=$(this).attr("data-sid");
         console.log("----->id minus value",id);
+        var html_qty_id="#myproduct"+id;
+        var html_price_id= "#myproductprice"+id;
+        console.log("---->actual id is",html_qty_id);
+        mydata={
+            id:id,
+            csrfmiddlewaretoken:csr,
+        }
+
+        $.ajax(
+            {
+                url:"{% url 'minus-product' %}",
+                method:"POST",
+                data:mydata,
+
+                success:function(response)
+                {
+                    console.log("response:",response.context.qty);
+                    console.log("response:",response.context.price);
+                    console.log("response:",response.context.total_price);
+
+                    $(html_qty_id).html(response.context.qty);
+                    $(html_price_id).html("Rs."+response.context.price);
+                    $("#total_price_id").html("Rs. "+response.context.total_price);
+                    $("#total_price_field").val(response.context.total_price);
+                }
+            }
+        )
+    })
+
+    $("#couponcodebtn").click(function(){
+
+        console.log("------>button clicked");
+        
+        let coupon= $("#couponcodeid").val();
+        let total_price =$("#total_price_field").val();
+        console.log("--->total_price=",total_price);
+        let csr=$("input[name=csrfmiddlewaretoken]").val();
+        mydata={
+            csrfmiddlewaretoken:csr,
+            coupon:coupon,
+            total_price:total_price,
+        }
+
+        $.ajax(
+            {
+                url:"{% url 'coupon' %}",
+                method:"POST",
+                data:mydata,
+
+                success:function(response)
+                {
+                    
+                    
+                    $("#total_price_id").html("Rs. "+response.context.total_price);
+                    $("#total_price_field").val(response.context.net_price);
+                    $("#discount_id").html("Rs. "+response.context.discount);
+                    $("#net_amount").html("Rs. "+response.context.net_price);
+                }
+            }
+        )
     })
 </script>
