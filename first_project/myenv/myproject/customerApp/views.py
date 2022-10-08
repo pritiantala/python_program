@@ -26,7 +26,7 @@ def c_home(request):
             'all_products':all_products,
             'offers':offers,
         }
-        return  render(request,"customerApp/c_index.html ",context)
+        return  render(request,"customerApp/register.html.html ",context)
 
 def my_cart(request):
     if "email" in request.session:
